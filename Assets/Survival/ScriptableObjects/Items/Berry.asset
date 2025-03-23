@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b4ccf107f02d4d4f9594245f246cbfa, type: 3}
+  m_Name: Berry
+  m_EditorClassIdentifier: 
+  itemName: Berry
+  itemTexture: {fileID: 0}
+  itemEffects:
+  - rid: 3869006836165509185
+  - rid: 3869006836165509182
+  - rid: 3869006836165509186
+  - rid: -2
+  - rid: -2
+  - rid: -2
+  itemEffects2: 00000000
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 3869006836165509182
+      type: {class: FoodEffect, ns: , asm: Assembly-CSharp}
+      data:
+        foodPoints: 55
+    - rid: 3869006836165509185
+      type: {class: DamageEffect, ns: , asm: Assembly-CSharp}
+      data:
+        damage: 1
+    - rid: 3869006836165509186
+      type: {class: DamageEffect, ns: , asm: Assembly-CSharp}
+      data:
+        damage: 0
