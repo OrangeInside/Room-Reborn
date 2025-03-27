@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
+using UnityEngine.UIElements;
 using Random = UnityEngine.Random;
 
 namespace Room
@@ -53,13 +55,13 @@ namespace Room
 
             tilesToCheck.Add(startTile);
             startTile.SetParent(startTile);
-
+            bool foundPath = false;
             do
             {
                 Tile tileToCheck = tilesToCheck[0];
                 tilesToCheck.RemoveAt(0);
                 tileToCheck.SetColor(Color.yellow);
-
+                 
                 var neighbours = GetAvailableNeighbours(GetNeighbours(tileToCheck));
                 foreach (Tile tile in neighbours)
                 {
@@ -70,6 +72,10 @@ namespace Room
                         tile.SetColor(Color.grey);
                         tilesToCheck.Add(tile);
                     }
+                    else
+                    {
+                        foundPath = true;
+                    }
                 }
                 Debug.Log(tilesToCheck.Count);
                 yield return new WaitForSeconds(0.1f);
@@ -78,6 +84,13 @@ namespace Room
             } while (tilesToCheck.Count > 0);
 
             ClearColors();
+
+            if (foundPath == false)
+            {
+                Debug.Log("Could not find path");
+                yield break;
+            }
+
 
             Tile currrentTile = endTile;
             do
@@ -90,9 +103,14 @@ namespace Room
             
         }
 
-        private Tile GetTile(int positionX, int  positionY)
+        public Tile GetTile(int positionX, int  positionY)
         {
             return tiles[positionX + (positionY * size)];
+        }
+
+        public Tile GetTile(Vector2Int position)
+        {
+            return tiles[position.x + (position.y * size)];
         }
 
         private List<Tile> GetNeighbours(Tile tile)
@@ -138,6 +156,74 @@ namespace Room
         public void FindPath(Tile startTile, Tile endTile)
         {
 
+        }
+
+        public Vector2Int GetClosestPositionOnPath(Vector2Int position, Vector2Int targetPosition)
+        {
+            ClearRooms();
+
+            Tile startTile = GetTile(position.x, position.y);
+            Tile targetTile = GetTile(targetPosition.x, targetPosition.y);
+
+            if(startTile == null)
+            {
+                Debug.Log($"Could not find tile on position: {position}");
+                return Vector2Int.zero;
+            }
+
+            if (targetTile == null)
+            {
+                Debug.Log($"Could not find tile on position: {targetPosition}");
+                return Vector2Int.zero;
+            }
+
+            List<Tile> tilesToCheck = new List<Tile>();
+
+            tilesToCheck.Add(startTile);
+            startTile.SetParent(startTile);
+            bool foundPath = false;
+            do
+            {
+                Tile tileToCheck = tilesToCheck[0];
+                tilesToCheck.RemoveAt(0);
+                //tileToCheck.SetColor(Color.yellow);
+
+                var neighbours = GetAvailableNeighbours(GetNeighbours(tileToCheck));
+                foreach (Tile tile in neighbours)
+                {
+                    tile.SetParent(tileToCheck);
+
+                    if (targetTile != tile)
+                    {
+                        //tile.SetColor(Color.grey);
+                        tilesToCheck.Add(tile);
+                    }
+                    else
+                    {
+                        foundPath = true;
+                    }
+                }
+            } while (tilesToCheck.Count > 0);
+
+            //ClearColors();
+
+            if (foundPath == false)
+            {
+                Debug.Log("Could not find path");
+                return Vector2Int.zero;
+            }
+
+            List<Vector2Int> path = new List<Vector2Int>();
+            Tile currrentTile = targetTile;
+            path.Add(new Vector2Int(currrentTile.PositionX, currrentTile.PositionY));
+            do
+            {
+                currrentTile = currrentTile.Parent;
+                path.Add(new Vector2Int(currrentTile.PositionX, currrentTile.PositionY));
+
+            } while (currrentTile != currrentTile.Parent);
+
+            return path[path.Count - 1];
         }
 
         public Tile FindTileOfType(TileType tileTypeToFind)

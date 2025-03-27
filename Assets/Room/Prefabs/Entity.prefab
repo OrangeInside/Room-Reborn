@@ -359,7 +359,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8434851201780972553}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Room.Tile, Assembly-CSharp
         m_MethodName: Clicked
         m_Mode: 1
@@ -381,9 +381,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1003346142829516636}
   - component: {fileID: 2304161782438684036}
-  - component: {fileID: 8434851201780972553}
+  - component: {fileID: -4595370218244457489}
   m_Layer: 0
-  m_Name: Tile
+  m_Name: Entity
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -460,7 +460,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &8434851201780972553
+--- !u!114 &-4595370218244457489
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -469,12 +469,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6002824552549613370}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b3dae57b3a0a4ea4fac18ae42f3dd3a5, type: 3}
+  m_Script: {fileID: 11500000, guid: f6f9d8e879770f74e8fe60a92a3818fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileType: 0
-  showIndex: 0
-  tileSprite: {fileID: 2304161782438684036}
-  entitySprite: {fileID: 0}
-  text: {fileID: 283882221454865497}
-  button: {fileID: 2126312118876581742}
+  spriteRenderer: {fileID: 2304161782438684036}

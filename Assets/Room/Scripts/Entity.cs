@@ -6,30 +6,51 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
-    [SerializeField] private EntityType type;
-    [SerializeField] private Sprite sprite;
-    [SerializeField] private EntityType targetType;
-    [SerializeField] private int actionRange = 1;
+    [SerializeField] private SpriteRenderer spriteRenderer;
 
     private Vector2Int position;
     private Entity target;
-    private Tile tileWithTarget;
+    private EntityData entityData;
+    private int ticksElapsedSinceLastAction;
 
-    public EntityType Type => type;
-    public Sprite Sprite => sprite;
+    public EntityType Type => entityData.EntityType;
+    public SpriteRenderer SpriteRenderer => spriteRenderer;
     public Vector2Int Position => position;
+    public EntityData EntityData => entityData;
     
-    public void SetPosition(int x, int y)
+    public void InitWithData(EntityData entityData, int entityID)
     {
-        position = new Vector2Int(x, y);
+        this.entityData = entityData;
+
+        spriteRenderer.sprite = entityData.EntitySprite;
+
+        gameObject.name = entityData.name + " " + entityID;
     }
 
-    public void DoYourTurn(List<Tile> tiles)
+    public void MoveToPosition(Vector2Int newPosition)
     {
-        if(target == null && targetType != EntityType.None)
+        position = newPosition;
+        transform.position = RoomGenerator.Instance.GetTile(position).transform.position;
+    }
+
+    public void Tick()
+    {
+        if(ticksElapsedSinceLastAction >= entityData.Stats.TicksFromDexterity())
         {
-            tileWithTarget = tiles.FirstOrDefault(x => x.Entity.Type == targetType);
-            target = tileWithTarget.Entity;
+            DoMyActions();
+            ticksElapsedSinceLastAction = 0;
+        }
+        else
+        {
+            ticksElapsedSinceLastAction++;
+        }
+    }
+
+    public void DoMyActions()
+    {
+        if(target == null && entityData.Stats.Intelligence > 0)
+        {
+            target = EntityManager.Instance.GetRandomEntityByType(entityData.Enemies);
             return;
         }
         if(IsInRange(target.Position))
@@ -38,7 +59,7 @@ public class Entity : MonoBehaviour
         }
         else
         {
-
+            MoveToPosition(RoomGenerator.Instance.GetClosestPositionOnPath(position, target.Position));
         }
     }
 
@@ -47,21 +68,10 @@ public class Entity : MonoBehaviour
 
     }
 
-    public void MoveToTile(Tile tileToMove)
-    {
-        tileToMove.SetEntity(this);
-    }
 
     public bool IsInRange(Vector2Int positionToCheck)
     {
-        return Vector2Int.Distance(position, positionToCheck) <= actionRange;
-    }
-
-    public Vector2Int GetTargetPosition(List<Tile> tiles)
-    {
-        Tile tileWithTarget = tiles.FirstOrDefault(x => x.Entity == target);
-
-        return new Vector2Int(tileWithTarget.PositionX, tileWithTarget.PositionY);
+        return Vector2Int.Distance(position, positionToCheck) <= entityData.Stats.ActionRange;
     }
 }
 

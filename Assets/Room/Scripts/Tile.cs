@@ -20,11 +20,13 @@ namespace Room
 
         private int positionX, positionY;
         private bool isChecked;
+        
         private Tile parent;
         private Entity entity;
 
         public int PositionX => positionX;
         public int PositionY => positionY;
+        public Vector2Int Position => new Vector2Int(positionX, positionY);
         public bool IsChecked => isChecked;
         public Tile Parent => parent;
         public Button Button => button;
