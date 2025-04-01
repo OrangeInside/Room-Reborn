@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using Room;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -18,19 +19,25 @@ public class Entity : MonoBehaviour
     public Vector2Int Position => position;
     public EntityData EntityData => entityData;
     
-    public void InitWithData(EntityData entityData, int entityID)
+    public void InitWithData(EntityData entityData, int entityID, Vector2Int position)
     {
         this.entityData = entityData;
 
         spriteRenderer.sprite = entityData.EntitySprite;
+        this.position = position;
 
         gameObject.name = entityData.name + " " + entityID;
     }
 
     public void MoveToPosition(Vector2Int newPosition)
     {
+        Debug.Log($"{gameObject.name} moved from {position} to {newPosition}");
+
+        RoomGenerator.Instance.GetTile(position).SetOccupied(false);
         position = newPosition;
+        
         transform.position = RoomGenerator.Instance.GetTile(position).transform.position;
+        RoomGenerator.Instance.GetTile(position).SetOccupied(true);
     }
 
     public void Tick()
@@ -59,7 +66,11 @@ public class Entity : MonoBehaviour
         }
         else
         {
-            MoveToPosition(RoomGenerator.Instance.GetClosestPositionOnPath(position, target.Position));
+            Tuple<Vector2Int, bool> result = RoomGenerator.Instance.GetClosestPositionOnPath(position, target.Position);
+            if(result.Item2 == true)
+            {
+                MoveToPosition(result.Item1);
+            }
         }
     }
 

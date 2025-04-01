@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using Room;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -25,12 +26,12 @@ public class EntityManager : MonoBehaviour
         TimeManager.Instance.OnGameTicked += TickEntitiesInDexterityOrder;
     }
 
-    public void SpawnEntity(EntityData entityData, Vector2Int position)
+    public void SpawnEntity(EntityData entityData, Vector3 worldPosition, Vector2Int tilePosition)
     {
-       Entity spawnedEntity = Instantiate(entityPrefab, new Vector3(position.x, position.y, 0), Quaternion.identity);
-        spawnedEntity.InitWithData(entityData, entityID);
+        Entity spawnedEntity = Instantiate(entityPrefab, worldPosition, Quaternion.identity);
+        spawnedEntity.InitWithData(entityData, entityID, tilePosition);
         entityID++;
-       entities.Add(spawnedEntity);
+        entities.Add(spawnedEntity);
     }
 
     public void RemoveEntity(Vector2Int position)
@@ -44,6 +45,8 @@ public class EntityManager : MonoBehaviour
         {
             Debug.Log($"Could not find entity to remove on position {position}");
         }
+
+        RoomGenerator.Instance.GetTile(position).SetOccupied(false);
     }
 
     public Entity GetRandomEntityByType(EntityType type)
@@ -59,6 +62,7 @@ public class EntityManager : MonoBehaviour
         {
             Debug.Log($"{entity.name} ticked");
             entity.Tick();
+
         }
     }   
 

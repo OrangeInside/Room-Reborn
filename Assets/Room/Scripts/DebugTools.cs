@@ -61,7 +61,7 @@ public class DebugTools : MonoBehaviour
                 }
                 else
                 {
-                    EntityManager.Instance.SpawnEntity(entitySelected, tile.Position);
+                    EntityManager.Instance.SpawnEntity(entitySelected, tile.WorldPosition, tile.Position);
                 }
                 break;
 

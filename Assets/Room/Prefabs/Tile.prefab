@@ -473,8 +473,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileType: 0
-  showIndex: 0
+  showIndex: 1
   tileSprite: {fileID: 2304161782438684036}
   entitySprite: {fileID: 0}
   text: {fileID: 283882221454865497}
   button: {fileID: 2126312118876581742}
+  pathFidingScore: 0

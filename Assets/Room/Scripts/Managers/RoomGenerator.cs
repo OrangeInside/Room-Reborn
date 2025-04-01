@@ -25,11 +25,12 @@ namespace Room
 
         private void Awake()
         {
-            if(
-                Instance == null)
+            if(Instance == null)
             {
                 RoomGenerator.Instance = this;
             }
+
+            //SpawnMap();
         }
 
         public void SpawnMap()
@@ -77,7 +78,7 @@ namespace Room
                         foundPath = true;
                     }
                 }
-                Debug.Log(tilesToCheck.Count);
+                //Debug.Log(tilesToCheck.Count);
                 yield return new WaitForSeconds(0.1f);
 
 
@@ -113,7 +114,7 @@ namespace Room
             return tiles[position.x + (position.y * size)];
         }
 
-        private List<Tile> GetNeighbours(Tile tile)
+        public List<Tile> GetNeighbours(Tile tile)
         {
             List<Tile> neighbours = new List<Tile>();
 
@@ -133,6 +134,7 @@ namespace Room
             {
                 if (tile.Parent != null) continue;
                 if (tile.TileType == TileType.Wall) continue;
+                if (tile.IsOccupied == true) continue;
 
                 availableNeighbours.Add(tile);
             }
@@ -153,12 +155,14 @@ namespace Room
             }
         }
 
+  
+
         public void FindPath(Tile startTile, Tile endTile)
         {
 
         }
 
-        public Vector2Int GetClosestPositionOnPath(Vector2Int position, Vector2Int targetPosition)
+        public Tuple<Vector2Int,bool> GetClosestPositionOnPath(Vector2Int position, Vector2Int targetPosition)
         {
             ClearRooms();
 
@@ -168,13 +172,13 @@ namespace Room
             if(startTile == null)
             {
                 Debug.Log($"Could not find tile on position: {position}");
-                return Vector2Int.zero;
+                return new Tuple<Vector2Int, bool>(Vector2Int.zero, false);
             }
 
             if (targetTile == null)
             {
                 Debug.Log($"Could not find tile on position: {targetPosition}");
-                return Vector2Int.zero;
+                return new Tuple<Vector2Int, bool>(Vector2Int.zero, false);
             }
 
             List<Tile> tilesToCheck = new List<Tile>();
@@ -210,7 +214,7 @@ namespace Room
             if (foundPath == false)
             {
                 Debug.Log("Could not find path");
-                return Vector2Int.zero;
+                return new Tuple<Vector2Int, bool>(Vector2Int.zero, false);
             }
 
             List<Vector2Int> path = new List<Vector2Int>();
@@ -223,7 +227,7 @@ namespace Room
 
             } while (currrentTile != currrentTile.Parent);
 
-            return path[path.Count - 1];
+            return new Tuple<Vector2Int, bool>(path[path.Count - 2], true);
         }
 
         public Tile FindTileOfType(TileType tileTypeToFind)
