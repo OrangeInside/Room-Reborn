@@ -55,23 +55,35 @@ public class Entity : MonoBehaviour
 
     public void DoMyActions()
     {
-        if(target == null && entityData.Stats.Intelligence > 0)
+        if(entityData.EntityType == EntityType.Prey)
         {
-            target = EntityManager.Instance.GetRandomEntityByType(entityData.Enemies);
-            return;
-        }
-        if(IsInRange(target.Position))
-        {
-            Action();
+            Vector2Int furthestPosition = RoomGenerator.Instance.GetPositionFurthestFromEntityType(position, entityData.Enemies);
+            List<Tile> path = PathFinder.Instance.FindShortestPath(position, furthestPosition);
+            MoveToPosition(path[1].Position);
         }
         else
         {
-            Tuple<Vector2Int, bool> result = RoomGenerator.Instance.GetClosestPositionOnPath(position, target.Position);
-            if(result.Item2 == true)
+            if (target == null && entityData.Stats.Intelligence > 0)
             {
-                MoveToPosition(result.Item1);
+                target = EntityManager.Instance.GetRandomEntityByType(entityData.Enemies);
+                return;
+            }
+            if (IsInRange(target.Position))
+            {
+                Action();
+            }
+            else
+            {
+                //Tuple<Vector2Int, bool> result = RoomGenerator.Instance.GetClosestPositionOnPath(position, target.Position);
+                //if (result.Item2 == true)
+                //{
+                //    MoveToPosition(result.Item1);
+                //}
+                List<Tile> path = PathFinder.Instance.FindShortestPath(position, target.Position);
+                MoveToPosition(path[1].Position);
             }
         }
+
     }
 
     public virtual void Action()

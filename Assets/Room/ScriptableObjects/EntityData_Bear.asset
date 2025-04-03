@@ -18,7 +18,7 @@ MonoBehaviour:
   entitySprite: {fileID: 21300000, guid: 58f1db9137696db4b8e24ae04e71cfa3, type: 3}
   stats:
     strength: 2
-    dexterity: 10
+    dexterity: 6
     constitution: 3
     intelligence: 1
     actionRange: 1

@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using Room;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -12,6 +13,8 @@ public class EntityManager : MonoBehaviour
 
     List<Entity> entities = new List<Entity>();
     private int entityID;
+
+    public List<Entity> Entities => entities;
      
     private void Awake()
     {
@@ -23,7 +26,8 @@ public class EntityManager : MonoBehaviour
 
     void Start()
     {
-        TimeManager.Instance.OnGameTicked += TickEntitiesInDexterityOrder;
+        //TimeManager.Instance.OnGameTicked += TickEntitiesInDexterityOrder;
+        TimeManager.Instance.OnGameTicked += () => StartCoroutine(TickEntities());
     }
 
     public void SpawnEntity(EntityData entityData, Vector3 worldPosition, Vector2Int tilePosition)
@@ -64,7 +68,22 @@ public class EntityManager : MonoBehaviour
             entity.Tick();
 
         }
-    }   
+    }
+
+    private IEnumerator TickEntities()
+    {
+        List<Entity> sortedEntities = entities.OrderBy(x => x.EntityData.Stats.Dexterity).ToList();
+
+        foreach (Entity entity in sortedEntities)
+        {
+            Debug.Log($"{entity.name} ticked");
+            entity.Tick();
+
+            yield return new WaitForSeconds(0.5f);
+        }
+
+        yield break;
+    }
 
 
 }

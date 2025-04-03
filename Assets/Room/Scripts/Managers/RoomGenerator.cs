@@ -243,6 +243,29 @@ namespace Room
             }
         }
 
+        public Vector2Int GetPositionFurthestFromEntityType(Vector2Int currentPosition, EntityType entityType)
+        {
+            List<float> distancesToEntities = new List<float>();
+            List<Entity> entities = EntityManager.Instance.Entities;
+
+            foreach (var tile in Tiles)
+            {
+                float distanceSum = 0f;
+                foreach (var entity in entities)
+                {
+                    if(entity.EntityData.EntityType == entityType)
+                    {
+                        distanceSum += Vector2.Distance(tile.Position, entity.Position);
+                    }
+                }
+                tile.SetText(distanceSum.ToString());
+                distancesToEntities.Add(distanceSum);
+            }
+
+            int furthestIndex = distancesToEntities.IndexOf(distancesToEntities.Max());
+            return Tiles[furthestIndex].Position;
+        }
+
         public void ClearColors()
         {
             foreach (Tile tile in tiles)
