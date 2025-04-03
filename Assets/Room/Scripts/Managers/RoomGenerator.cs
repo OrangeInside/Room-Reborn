@@ -49,61 +49,6 @@ namespace Room
             }
         }
 
-
-        IEnumerator FindingPath(Tile startTile, Tile endTile)
-        {
-            List<Tile> tilesToCheck = new List<Tile>();
-
-            tilesToCheck.Add(startTile);
-            startTile.SetParent(startTile);
-            bool foundPath = false;
-            do
-            {
-                Tile tileToCheck = tilesToCheck[0];
-                tilesToCheck.RemoveAt(0);
-                tileToCheck.SetColor(Color.yellow);
-                 
-                var neighbours = GetAvailableNeighbours(GetNeighbours(tileToCheck));
-                foreach (Tile tile in neighbours)
-                {
-                    tile.SetParent(tileToCheck);
-
-                    if (endTile != tile)
-                    {
-                        tile.SetColor(Color.grey);
-                        tilesToCheck.Add(tile);
-                    }
-                    else
-                    {
-                        foundPath = true;
-                    }
-                }
-                //Debug.Log(tilesToCheck.Count);
-                yield return new WaitForSeconds(0.1f);
-
-
-            } while (tilesToCheck.Count > 0);
-
-            ClearColors();
-
-            if (foundPath == false)
-            {
-                Debug.Log("Could not find path");
-                yield break;
-            }
-
-
-            Tile currrentTile = endTile;
-            do
-            {
-                currrentTile.SetColor(Color.cyan);
-                currrentTile = currrentTile.Parent;
-                yield return new WaitForSeconds(0.2f);
-
-            } while (currrentTile != currrentTile.Parent);
-            
-        }
-
         public Tile GetTile(int positionX, int  positionY)
         {
             return tiles[positionX + (positionY * size)];
@@ -125,114 +70,10 @@ namespace Room
 
             return neighbours;
         }
-
-        private List<Tile> GetAvailableNeighbours(List<Tile> tiles)
-        {
-            List<Tile> availableNeighbours = new List<Tile>();
-
-            foreach (var tile in tiles)
-            {
-                if (tile.Parent != null) continue;
-                if (tile.TileType == TileType.Wall) continue;
-                if (tile.IsOccupied == true) continue;
-
-                availableNeighbours.Add(tile);
-            }
-
-            return availableNeighbours;
-        }
-
-        public void FindPathTest()
-        {
-            ClearRooms();
-
-            Tile startTile = FindTileOfType(TileType.Start);
-            Tile endTile = FindTileOfType(TileType.End);
-
-            if(startTile != null &&  endTile != null)
-            {
-                StartCoroutine(FindingPath(startTile, endTile));
-            }
-        }
-
   
-
-        public void FindPath(Tile startTile, Tile endTile)
+        public Tile FindTileOfType(string tileTypeToFind)
         {
-
-        }
-
-        public Tuple<Vector2Int,bool> GetClosestPositionOnPath(Vector2Int position, Vector2Int targetPosition)
-        {
-            ClearRooms();
-
-            Tile startTile = GetTile(position.x, position.y);
-            Tile targetTile = GetTile(targetPosition.x, targetPosition.y);
-
-            if(startTile == null)
-            {
-                Debug.Log($"Could not find tile on position: {position}");
-                return new Tuple<Vector2Int, bool>(Vector2Int.zero, false);
-            }
-
-            if (targetTile == null)
-            {
-                Debug.Log($"Could not find tile on position: {targetPosition}");
-                return new Tuple<Vector2Int, bool>(Vector2Int.zero, false);
-            }
-
-            List<Tile> tilesToCheck = new List<Tile>();
-
-            tilesToCheck.Add(startTile);
-            startTile.SetParent(startTile);
-            bool foundPath = false;
-            do
-            {
-                Tile tileToCheck = tilesToCheck[0];
-                tilesToCheck.RemoveAt(0);
-                //tileToCheck.SetColor(Color.yellow);
-
-                var neighbours = GetAvailableNeighbours(GetNeighbours(tileToCheck));
-                foreach (Tile tile in neighbours)
-                {
-                    tile.SetParent(tileToCheck);
-
-                    if (targetTile != tile)
-                    {
-                        //tile.SetColor(Color.grey);
-                        tilesToCheck.Add(tile);
-                    }
-                    else
-                    {
-                        foundPath = true;
-                    }
-                }
-            } while (tilesToCheck.Count > 0);
-
-            //ClearColors();
-
-            if (foundPath == false)
-            {
-                Debug.Log("Could not find path");
-                return new Tuple<Vector2Int, bool>(Vector2Int.zero, false);
-            }
-
-            List<Vector2Int> path = new List<Vector2Int>();
-            Tile currrentTile = targetTile;
-            path.Add(new Vector2Int(currrentTile.PositionX, currrentTile.PositionY));
-            do
-            {
-                currrentTile = currrentTile.Parent;
-                path.Add(new Vector2Int(currrentTile.PositionX, currrentTile.PositionY));
-
-            } while (currrentTile != currrentTile.Parent);
-
-            return new Tuple<Vector2Int, bool>(path[path.Count - 2], true);
-        }
-
-        public Tile FindTileOfType(TileType tileTypeToFind)
-        {
-            return tiles.FirstOrDefault(t => t.TileType == tileTypeToFind);
+            return tiles.FirstOrDefault(t => t.TileData.tileName == tileTypeToFind);
         }
 
         public void ClearRooms()

@@ -25,8 +25,8 @@ public class PathFinder : MonoBehaviour
     {
         RoomGenerator.Instance.ClearRooms();
 
-        Tile startTile = RoomGenerator.Instance.FindTileOfType(TileType.Start);
-        Tile endTile = RoomGenerator.Instance.FindTileOfType(TileType.End);
+        Tile startTile = RoomGenerator.Instance.FindTileOfType("TestStart");
+        Tile endTile = RoomGenerator.Instance.FindTileOfType("TestEnd");
 
         List<Tile> path = new List<Tile>();
 
@@ -45,8 +45,8 @@ public class PathFinder : MonoBehaviour
     {
         RoomGenerator.Instance.ClearRooms();
 
-        Tile startTile = RoomGenerator.Instance.FindTileOfType(TileType.Start);
-        Tile endTile = RoomGenerator.Instance.FindTileOfType(TileType.End);
+        Tile startTile = RoomGenerator.Instance.FindTileOfType("TestStart");
+        Tile endTile = RoomGenerator.Instance.FindTileOfType("TestEnd");
 
         List<Tile> path = new List<Tile>();
 

@@ -9,8 +9,6 @@ public class EntityManager : MonoBehaviour
 {
     static public EntityManager Instance;
 
-    [SerializeField] private Entity entityPrefab;
-
     List<Entity> entities = new List<Entity>();
     private int entityID;
 
@@ -30,10 +28,10 @@ public class EntityManager : MonoBehaviour
         TimeManager.Instance.OnGameTicked += () => StartCoroutine(TickEntities());
     }
 
-    public void SpawnEntity(EntityData entityData, Vector3 worldPosition, Vector2Int tilePosition)
+    public void SpawnEntity(Entity entityPrefab, Vector3 worldPosition, Vector2Int tilePosition)
     {
         Entity spawnedEntity = Instantiate(entityPrefab, worldPosition, Quaternion.identity);
-        spawnedEntity.InitWithData(entityData, entityID, tilePosition);
+        spawnedEntity.Init(entityID, tilePosition);
         entityID++;
         entities.Add(spawnedEntity);
     }
@@ -65,7 +63,7 @@ public class EntityManager : MonoBehaviour
         foreach(Entity entity in sortedEntities)
         {
             Debug.Log($"{entity.name} ticked");
-            entity.Tick();
+            entity.StateMachine.UpdateStates();
 
         }
     }
@@ -77,7 +75,7 @@ public class EntityManager : MonoBehaviour
         foreach (Entity entity in sortedEntities)
         {
             Debug.Log($"{entity.name} ticked");
-            entity.Tick();
+            entity.StateMachine.UpdateStates();
 
             yield return new WaitForSeconds(0.5f);
         }

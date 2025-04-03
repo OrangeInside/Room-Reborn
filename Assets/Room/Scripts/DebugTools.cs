@@ -51,7 +51,7 @@ public class DebugTools : MonoBehaviour
         switch (coloringMode)
         {
             case ColoringMode.Tiles:
-                tile.SetType(tilePaintType);
+               // tile.SetType(tilePaintType);
                 break;
 
             case ColoringMode.Entities:
@@ -61,7 +61,7 @@ public class DebugTools : MonoBehaviour
                 }
                 else
                 {
-                    EntityManager.Instance.SpawnEntity(entitySelected, tile.WorldPosition, tile.Position);
+                    //EntityManager.Instance.SpawnEntity(entitySelected, tile.WorldPosition, tile.Position);
                 }
                 break;
 
