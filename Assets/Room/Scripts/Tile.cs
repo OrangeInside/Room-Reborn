@@ -43,6 +43,13 @@ namespace Room
             text.enabled = false;
         }
 
+        public void ApplyData(TileData tileData)
+        {
+            this.tileData = tileData;
+            tileSprite.sprite = tileData.texture;
+            tileSprite.color = tileData.color;
+        }
+
         public void SetColor(Color color)
         {
             tileSprite.color = color;
