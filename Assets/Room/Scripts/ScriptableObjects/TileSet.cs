@@ -7,7 +7,7 @@ using UnityEngine;
 public class TileSet : ScriptableObject
 {
     [SerializeField]
-    List<Tile> tiles;
+    List<TileData> tiles;
 
-    public List<Tile> Tiles => tiles;
+    public List<TileData> Tiles => tiles;
 }
