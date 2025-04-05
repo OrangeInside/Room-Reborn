@@ -7,18 +7,24 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
+    [Header("Settings")]
+    [SerializeField] private string entityName;
+    [SerializeField] private EntityType entityType;
+    [SerializeField] private EntityType mainEnemy;
+    [SerializeField] private Stats stats;
+
     [Header("References from prefab")]
     [SerializeField] private SpriteRenderer spriteRenderer;
 
     private StateMachine stateMachine;
-
-    private EntityData entityData;
     private Vector2Int position;
     private int ticksElapsedSinceLastAction;
 
-    public EntityData EntityData => entityData;
+    public string EntityName => entityName;
+    public EntityType Type => entityType;
+    public Stats Stats => stats;
+    public Sprite Sprite => spriteRenderer.sprite;
     public Vector2Int Position => position;
-    public EntityType Type => entityData.EntityType;
     public StateMachine StateMachine => stateMachine;
 
     private void Start()
@@ -30,7 +36,7 @@ public class Entity : MonoBehaviour
     {
         this.position = position;
 
-        gameObject.name = entityData.name + " " + entityID;
+        gameObject.name = entityName + " " + entityID;
     }
 }
 

@@ -24,8 +24,8 @@ public class EntityManager : MonoBehaviour
 
     void Start()
     {
-        //TimeManager.Instance.OnGameTicked += TickEntitiesInDexterityOrder;
-        TimeManager.Instance.OnGameTicked += () => StartCoroutine(TickEntities());
+        TimeManager.Instance.OnGameTicked += TickEntitiesInDexterityOrder;
+        //TimeManager.Instance.OnGameTicked += () => StartCoroutine(TickEntities());
     }
 
     public void SpawnEntity(Entity entityPrefab, Vector3 worldPosition, Vector2Int tilePosition)
@@ -58,7 +58,7 @@ public class EntityManager : MonoBehaviour
 
     private void TickEntitiesInDexterityOrder()
     {
-        List<Entity> sortedEntities = entities.OrderBy(x => x.EntityData.Stats.Dexterity).ToList();
+        List<Entity> sortedEntities = entities.OrderBy(x => x.Stats.Dexterity).ToList();
 
         foreach(Entity entity in sortedEntities)
         {
@@ -70,7 +70,7 @@ public class EntityManager : MonoBehaviour
 
     private IEnumerator TickEntities()
     {
-        List<Entity> sortedEntities = entities.OrderBy(x => x.EntityData.Stats.Dexterity).ToList();
+        List<Entity> sortedEntities = entities.OrderBy(x => x.Stats.Dexterity).ToList();
 
         foreach (Entity entity in sortedEntities)
         {

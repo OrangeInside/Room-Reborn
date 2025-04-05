@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Grid/TileData")]
+[CreateAssetMenu(fileName = "TileData", menuName = "Scriptable Objects/TileData")]
 public class TileData : ScriptableObject
 {
     [Header("Visuals")]

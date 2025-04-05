@@ -9,9 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 431a1136f76976f49ab26443eb9fa94e, type: 3}
-  m_Name: EntitySet
+  m_Script: {fileID: 11500000, guid: aa2dced3c7b15094b96ae316be5bf0a0, type: 3}
+  m_Name: StoneFloorTileData
   m_EditorClassIdentifier: 
-  entities:
-  - {fileID: -4595370218244457489, guid: db43d692c4b412f40a76c4648993dcb6, type: 3}
-  - {fileID: -4595370218244457489, guid: 236f7ccfb2da5524d8936944d84d49f4, type: 3}
+  tileName: Stone Floor
+  texture: {fileID: 21300000, guid: 07752f11d57f4294a9231781d89f5770, type: 3}
+  color: {r: 1, g: 1, b: 1, a: 1}
+  movementCost: 1
+  isWalkable: 1

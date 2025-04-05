@@ -15,13 +15,13 @@ namespace Room
     {
         public static RoomGenerator Instance;
 
-        [SerializeField] private int size = 5;
         [SerializeField] private Tile tilePrefab;
         [SerializeField] Transform mapContainer;
 
         private List<Tile> tiles;
         public List<Tile> Tiles => tiles;
 
+        private int xSize, ySize;
 
         private void Awake()
         {
@@ -29,17 +29,26 @@ namespace Room
             {
                 RoomGenerator.Instance = this;
             }
-
-            //SpawnMap();
         }
 
-        public void SpawnMap()
+        public void SpawnMap(int xSize, int ySize)
         {
+            this.xSize = xSize;
+            this.ySize = ySize;
+
+            if(tiles != null)
+            {
+                foreach(var tile in tiles)
+                {
+                    GameObject.Destroy(tile.gameObject);
+                }
+            }
+
             tiles = new List<Tile>();
 
-            for (int i = 0; i < size; i++)
+            for (int i = 0; i < ySize; i++)
             {
-                for (int j = 0; j < size; j++)
+                for (int j = 0; j < xSize; j++)
                 {
                     Tile spawnedTile = Instantiate(tilePrefab, mapContainer);
                     spawnedTile.transform.localPosition = new Vector3(j, i, 0);
@@ -51,12 +60,12 @@ namespace Room
 
         public Tile GetTile(int positionX, int  positionY)
         {
-            return tiles[positionX + (positionY * size)];
+            return tiles[positionX + (positionY * ySize)];
         }
 
         public Tile GetTile(Vector2Int position)
         {
-            return tiles[position.x + (position.y * size)];
+            return tiles[position.x + (position.y * ySize)];
         }
 
         public List<Tile> GetNeighbours(Tile tile)
@@ -64,9 +73,9 @@ namespace Room
             List<Tile> neighbours = new List<Tile>();
 
             if(tile.PositionX - 1 >= 0) neighbours.Add(GetTile(tile.PositionX - 1, tile.PositionY));
-            if(tile.PositionX + 1 < size) neighbours.Add(GetTile(tile.PositionX + 1, tile.PositionY));
+            if(tile.PositionX + 1 < xSize) neighbours.Add(GetTile(tile.PositionX + 1, tile.PositionY));
             if (tile.PositionY - 1 >= 0) neighbours.Add(GetTile(tile.PositionX, tile.PositionY - 1));
-            if (tile.PositionY + 1 < size) neighbours.Add(GetTile(tile.PositionX, tile.PositionY + 1));
+            if (tile.PositionY + 1 < ySize) neighbours.Add(GetTile(tile.PositionX, tile.PositionY + 1));
 
             return neighbours;
         }
@@ -94,7 +103,7 @@ namespace Room
                 float distanceSum = 0f;
                 foreach (var entity in entities)
                 {
-                    if(entity.EntityData.EntityType == entityType)
+                    if(entity.Type == entityType)
                     {
                         distanceSum += Vector2.Distance(tile.Position, entity.Position);
                     }
