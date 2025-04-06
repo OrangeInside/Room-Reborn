@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+[RequireComponent(typeof(StateMachine))]
 public class Entity : MonoBehaviour
 {
     [Header("Settings")]
@@ -29,7 +30,7 @@ public class Entity : MonoBehaviour
 
     private void Start()
     {
-        stateMachine = new StateMachine();
+        stateMachine = GetComponent<StateMachine>();
     }
 
     public void Init(int entityID, Vector2Int position)

@@ -448,7 +448,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 58f1db9137696db4b8e24ae04e71cfa3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -472,4 +472,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6f9d8e879770f74e8fe60a92a3818fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  entityName: 
+  entityType: 0
+  mainEnemy: 0
+  stats:
+    strength: 0
+    dexterity: 0
+    constitution: 0
+    intelligence: 0
+    actionRange: 0
   spriteRenderer: {fileID: 2304161782438684036}

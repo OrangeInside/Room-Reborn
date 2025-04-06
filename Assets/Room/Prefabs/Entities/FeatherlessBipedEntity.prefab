@@ -382,6 +382,7 @@ GameObject:
   - component: {fileID: 1003346142829516636}
   - component: {fileID: 2304161782438684036}
   - component: {fileID: -4595370218244457489}
+  - component: {fileID: -9171772730238379597}
   m_Layer: 0
   m_Name: FeatherlessBipedEntity
   m_TagString: Untagged
@@ -448,7 +449,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 0e4011d5b81f265428b6703254c03995, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -482,3 +483,18 @@ MonoBehaviour:
     intelligence: 2
     actionRange: 1
   spriteRenderer: {fileID: 2304161782438684036}
+--- !u!114 &-9171772730238379597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6002824552549613370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e76f5fe4998b8594088c245bfc275f35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _initialState: {fileID: 11400000, guid: f7cc71fca05f85e4bbbe8c6d26bd1e07, type: 2}
+  _anyTransitions: []
+  _stateTransitions: []
