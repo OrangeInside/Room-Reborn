@@ -39,6 +39,11 @@ public class Entity : MonoBehaviour
 
         gameObject.name = entityName + " " + entityID;
     }
+
+    public void SetPosition(Vector2Int position)
+    {
+        this.position = position;
+    }
 }
 
 public enum EntityType
