@@ -50,12 +50,12 @@ public class IdleState : State
         if(random <= chanceForIdlingInPlace)
         {
             chanceForIdlingInPlace = 0;
-            return false;
+            return true;
         }
         else
         {
             chanceForIdlingInPlace += idlingInPlaceModifier;
-            return true;
+            return false;
         }
     }
 

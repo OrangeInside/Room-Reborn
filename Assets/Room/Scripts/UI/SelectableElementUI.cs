@@ -9,11 +9,14 @@ public class SelectableElementUI : MonoBehaviour
     [SerializeField] Image border;
     [SerializeField] TMP_Text label;
     [SerializeField] Button button;
+    [SerializeField] Color hoverColor;
+    [SerializeField] Color selectedColor;
 
     public event Action<int, GeneralCategory> onClick;
 
     private int index;
     private GeneralCategory category;
+    bool isSelected = false;
 
     private void Awake()
     {
@@ -27,6 +30,7 @@ public class SelectableElementUI : MonoBehaviour
         image.sprite = sprite;
         image.color = color;
         this.label.text = label;
+        //button.
     }
 
     public void Clicked()
@@ -36,11 +40,25 @@ public class SelectableElementUI : MonoBehaviour
 
     public void Select()
     {
-        border.enabled = true;
+        border.color = selectedColor;
+        isSelected = true;
+    }
+
+    public void Hover()
+    {
+        if(!isSelected)
+            border.color = hoverColor;
+    }
+
+    public void Unhover()
+    {
+        if (!isSelected)
+            border.color = hoverColor;
     }
 
     public void Unselect()
     {
-        border.enabled = false;
+        border.color = new Color(0,0,0,0);
+        isSelected = false;
     }
 }

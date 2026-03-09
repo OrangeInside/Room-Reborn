@@ -64,7 +64,6 @@ public class EntityManager : MonoBehaviour
         {
             Debug.Log($"{entity.name} ticked");
             entity.StateMachine.UpdateStates();
-
         }
     }
 

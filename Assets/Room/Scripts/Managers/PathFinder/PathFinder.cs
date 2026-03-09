@@ -21,45 +21,6 @@ public class PathFinder : MonoBehaviour
         }
     }
 
-    public void FindPathTest()
-    {
-        RoomGenerator.Instance.ClearRooms();
-
-        Tile startTile = RoomGenerator.Instance.FindTileOfType("TestStart");
-        Tile endTile = RoomGenerator.Instance.FindTileOfType("TestEnd");
-
-        List<Tile> path = new List<Tile>();
-
-        if (startTile != null && endTile != null)
-        {
-            path = FindShortestPath(startTile.Position, endTile.Position);
-        }
-
-        foreach (var tile in path)
-        {
-            tile.SetColor(Color.cyan);
-        }
-    }
-
-    public void FindPathTestVisualisation()
-    {
-        RoomGenerator.Instance.ClearRooms();
-
-        Tile startTile = RoomGenerator.Instance.FindTileOfType("TestStart");
-        Tile endTile = RoomGenerator.Instance.FindTileOfType("TestEnd");
-
-        List<Tile> path = new List<Tile>();
-
-        if (startTile != null && endTile != null)
-        {
-            StartCoroutine(FindShortestPathVisualisation(startTile.Position, endTile.Position));
-        }
-
-        foreach (var tile in path)
-        {
-            tile.SetColor(Color.cyan);
-        }
-    }
 
     public IEnumerator FindShortestPathVisualisation(Vector2Int start, Vector2Int target)
     {

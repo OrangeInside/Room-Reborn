@@ -20,22 +20,21 @@ public class StateMachine : MonoBehaviour
         };
 
         initialState.Init(context);
-        foreach (var stateTransition in stateTransitions)
+        foreach (StateTransitions stateTransition in stateTransitions)
         {
             stateTransition.State.Init(context);
-            foreach (var transition in stateTransition.Transitions)
+            foreach (Transition transition in stateTransition.Transitions)
             {
                 transition.Condition.Init(context);
             }
         }
 
-        foreach (var transition in anyTransitions)
+        foreach (Transition transition in anyTransitions)
         {
             transition.Condition.Init(context);
         }
 
-
-        foreach (var stateTransition in stateTransitions)
+        foreach (StateTransitions stateTransition in stateTransitions)
         {
             transitions[stateTransition.State] = new List<Transition>(stateTransition.Transitions);
         }

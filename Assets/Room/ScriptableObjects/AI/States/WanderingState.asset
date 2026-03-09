@@ -9,7 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4f2da419ec761b42ad4cd4063bcbda5, type: 3}
-  m_Name: IdleState
+  m_Script: {fileID: 11500000, guid: ac36cb6e7baf9d44aae3158702eda206, type: 3}
+  m_Name: WanderingState
   m_EditorClassIdentifier: 
-  idlingInPlaceModifier: 25
+  minimalDistanceToTravel: 1
+  maximalDistanceToTravel: 3

@@ -60,12 +60,19 @@ namespace Room
 
         public Tile GetTile(int positionX, int  positionY)
         {
-            return tiles[positionX + (positionY * ySize)];
+            if(positionX + (positionY * ySize) < tiles.Count)
+            {
+                return tiles[positionX + (positionY * ySize)];
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public Tile GetTile(Vector2Int position)
         {
-            return tiles[position.x + (position.y * ySize)];
+            return GetTile(position.x, position.y);
         }
 
         public List<Tile> GetNeighbours(Tile tile)
@@ -79,7 +86,25 @@ namespace Room
 
             return neighbours;
         }
-  
+
+        public List<Tile> GetTilesInArea(Tile tile, int areaRadius)
+        {
+            List<Tile> neighbours = new List<Tile>();
+
+            for(int i = -areaRadius; i <= areaRadius; i++)
+            {
+                for (int j = -areaRadius; j <= areaRadius; j++)
+                {
+                    if (GetTile(tile.PositionX + i, tile.PositionY + j) is Tile tileToAdd)
+                    {
+                        neighbours.Add(tileToAdd);
+                    }
+                }
+            }
+
+            return neighbours;
+        }
+
         public Tile FindTileOfType(string tileTypeToFind)
         {
             return tiles.FirstOrDefault(t => t.TileData.tileName == tileTypeToFind);

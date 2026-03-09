@@ -1,5 +1,7 @@
 
+using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,6 +23,7 @@ namespace Room
         private int positionX, positionY;
         private float weight = 1f;
         private bool isOccupied = false;
+        private List<Entity> residingEntities = new List<Entity>();
 
         [HideInInspector]
         public float pathFidingScore;        
@@ -37,6 +40,7 @@ namespace Room
         public Tile Parent => parent;
         public Entity Entity => entity;
         public float Weight => weight;
+        public List<Entity> ResidingEntities => residingEntities;
 
         private void Awake()
         {
@@ -62,6 +66,22 @@ namespace Room
         public void SetEntity(Entity entity)
         {
             this.entity = entity;
+        }
+
+        public void AddResidingEntity(Entity entity)
+        {
+            if (residingEntities.Contains(entity) == false)
+            {
+                residingEntities.Add(entity);
+            }
+        }
+
+        public void RemoveResidingEntity(Entity entity)
+        {
+            if (residingEntities.Contains(entity) == true)
+            {
+                residingEntities.Remove(entity);
+            }
         }
 
         public void Clear()
@@ -106,6 +126,14 @@ namespace Room
         Start,
         End,
         Bush
+    }
+
+    public enum Direction
+    {
+        North = 0,
+        East = 1,
+        South = 2,
+        West = 3
     }
 }
 
