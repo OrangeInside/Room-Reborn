@@ -6,59 +6,16 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "AI/States/IdleState")]
 public class IdleState : State
 {
-    [SerializeField] private float idlingInPlaceModifier;
-    private float chanceForIdlingInPlace;
-    private Vector2Int lastPosition;
-
-    public override void Enter() { Debug.Log("Entering Idle State"); }
-    public override void Update() 
+    public override void Enter()
     {
-        if (ShouldMove())
-        {
-            Tile currentTile = RoomGenerator.Instance.GetTile(context.owner.Position);
-            Tile lastTile = RoomGenerator.Instance.GetTile(lastPosition);
-            List<Tile> neighbours = RoomGenerator.Instance.GetNeighbours(currentTile);
-
-            List<Tile> legalTiles = new List<Tile>();
-            foreach (var neighbour in neighbours)
-            {
-                if (neighbour.TileData.isWalkable && neighbour != lastTile)
-                {
-                    legalTiles.Add(neighbour);
-                }
-            }
-
-            if (legalTiles.Count > 0)
-            {
-                Tile randomNeighbour = legalTiles[Random.Range(0, legalTiles.Count)];
-                context.owner.transform.position = randomNeighbour.WorldPosition;
-                context.owner.SetPosition(randomNeighbour.Position);
-            }
-            else
-            {
-                context.owner.transform.position = lastTile.WorldPosition;
-                context.owner.SetPosition(lastTile.Position);
-            }
-
-        }
+        context.idleTurns = 0;
+        Debug.Log("Entering Idle State");
+        
     }
-
-    private bool ShouldMove()
+    public override void Update()
     {
-        float random = Random.Range(0, 100);
-
-        if(random <= chanceForIdlingInPlace)
-        {
-            chanceForIdlingInPlace = 0;
-            return true;
-        }
-        else
-        {
-            chanceForIdlingInPlace += idlingInPlaceModifier;
-            return false;
-        }
+        context.idleTurns++;
     }
-
 
     public override void Exit() { Debug.Log("Exiting Idle State"); }
 }

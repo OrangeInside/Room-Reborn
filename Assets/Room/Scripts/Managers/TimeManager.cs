@@ -6,7 +6,7 @@ public class TimeManager : MonoBehaviour
 {
     public static TimeManager Instance;
 
-    [SerializeField] private float timeToTick = 1.0f;
+    [SerializeField] private float timeToTick = 2.0f;
 
     public event Action OnGameTicked;
 

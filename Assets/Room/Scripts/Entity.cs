@@ -44,6 +44,11 @@ public class Entity : MonoBehaviour
     {
         this.position = position;
     }
+
+    public void Death()
+    {
+        spriteRenderer.color = Color.red;
+    }
 }
 
 public enum EntityType

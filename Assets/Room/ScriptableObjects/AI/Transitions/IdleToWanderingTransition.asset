@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6970ceca6ed02294a81a2017495843ba, type: 3}
   m_Name: IdleToWanderingTransition
   m_EditorClassIdentifier: 
-  TargetState: {fileID: 11400000, guid: f7cc71fca05f85e4bbbe8c6d26bd1e07, type: 2}
+  TargetState: {fileID: 11400000, guid: b972aa31d5f840d43879dbd756e4f860, type: 2}
   Priority: 0
-  Condition: {fileID: 11400000, guid: c43c4490d3acacd4da4dfb3571191ce4, type: 2}
+  Condition: {fileID: 11400000, guid: ba8df19974f1ff4c0bdc3922559b5c69, type: 2}

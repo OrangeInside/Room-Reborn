@@ -16,7 +16,8 @@ public class StateMachine : MonoBehaviour
     {
         context = new StateMachineContext()
         {
-            owner = GetComponent<Entity>()
+            owner = GetComponent<Entity>(),
+            lifeParameters = GetComponent<LifeParameters>()
         };
 
         initialState.Init(context);
@@ -44,8 +45,11 @@ public class StateMachine : MonoBehaviour
 
     public void SetState(State state)
     {
+        if (currentState == state) return;
+        
         currentState?.Exit();
         currentState = state;
+        context.currentState = state;
         currentState.Enter();
     }
 
@@ -56,6 +60,7 @@ public class StateMachine : MonoBehaviour
         {
             SetState(transition.TargetState);
         }
+        context.UpdateData();
         currentState?.Update();
     }
 
@@ -64,8 +69,8 @@ public class StateMachine : MonoBehaviour
         var possibleTransitions = anyTransitions
             .Concat(transitions.GetValueOrDefault(currentState, new List<Transition>()))
             .Where(t => t.Condition.Evaluate())
-            .OrderByDescending(t => t.TargetState.Priority) // Priorytet stanów
-            .ThenByDescending(t => t.Priority) // Priorytet przejœæ
+            .OrderByDescending(t => t.TargetState.Priority) // Priorytet stanï¿½w
+            .ThenByDescending(t => t.Priority) // Priorytet przejï¿½ï¿½
             .FirstOrDefault();
 
         return possibleTransitions;

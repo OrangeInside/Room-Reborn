@@ -9,8 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac36cb6e7baf9d44aae3158702eda206, type: 3}
-  m_Name: WanderingState
-  m_EditorClassIdentifier: 
-  minimalDistanceToTravel: 5
-  maximumDistanceToTravel: 5
+  m_Script: {fileID: 11500000, guid: 9b4b41ee47fe08c09a3ed12dc59e8532, type: 3}
+  m_Name: StateFinished Condition
+  m_EditorClassIdentifier: Assembly-CSharp::StateFinishedCondition

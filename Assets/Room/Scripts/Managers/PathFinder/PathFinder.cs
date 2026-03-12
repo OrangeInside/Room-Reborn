@@ -21,6 +21,45 @@ public class PathFinder : MonoBehaviour
         }
     }
 
+    public void FindPathTest()
+    {
+        RoomGenerator.Instance.ClearRooms();
+
+        Tile startTile = RoomGenerator.Instance.FindTileOfType("TestStart");
+        Tile endTile = RoomGenerator.Instance.FindTileOfType("TestEnd");
+
+        List<Tile> path = new List<Tile>();
+
+        if (startTile != null && endTile != null)
+        {
+            path = FindShortestPath(startTile.Position, endTile.Position);
+        }
+
+        foreach (var tile in path)
+        {
+            tile.SetColor(Color.cyan);
+        }
+    }
+
+    public void FindPathTestVisualisation()
+    {
+        RoomGenerator.Instance.ClearRooms();
+
+        Tile startTile = RoomGenerator.Instance.FindTileOfType("TestStart");
+        Tile endTile = RoomGenerator.Instance.FindTileOfType("TestEnd");
+
+        List<Tile> path = new List<Tile>();
+
+        if (startTile != null && endTile != null)
+        {
+            StartCoroutine(FindShortestPathVisualisation(startTile.Position, endTile.Position));
+        }
+
+        foreach (var tile in path)
+        {
+            tile.SetColor(Color.cyan);
+        }
+    }
 
     public IEnumerator FindShortestPathVisualisation(Vector2Int start, Vector2Int target)
     {
@@ -172,16 +211,5 @@ public class PathFinder : MonoBehaviour
     private float GetDistanceToTarget(Tile A, Tile B)
     {
         return Vector2.Distance(A.Position, B.Position);
-    }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

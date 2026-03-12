@@ -206,6 +206,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -383,6 +384,7 @@ GameObject:
   - component: {fileID: 2304161782438684036}
   - component: {fileID: -4595370218244457489}
   - component: {fileID: -9171772730238379597}
+  - component: {fileID: 5558748499984248622}
   m_Layer: 0
   m_Name: FeatherlessBipedEntity
   m_TagString: Untagged
@@ -408,6 +410,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2304161782438684036
 SpriteRenderer:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -426,6 +429,8 @@ SpriteRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -447,9 +452,11 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
+  m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 0e4011d5b81f265428b6703254c03995, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -459,7 +466,6 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &-4595370218244457489
 MonoBehaviour:
@@ -496,6 +502,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialState: {fileID: 11400000, guid: f7cc71fca05f85e4bbbe8c6d26bd1e07, type: 2}
-  anyTransitions:
-  - {fileID: 0}
-  stateTransitions: []
+  anyTransitions: []
+  stateTransitions:
+  - State: {fileID: 11400000, guid: f7cc71fca05f85e4bbbe8c6d26bd1e07, type: 2}
+    Transitions:
+    - {fileID: 11400000, guid: a31cf8966f82ce44c9aead853c31ca93, type: 2}
+  - State: {fileID: 11400000, guid: b972aa31d5f840d43879dbd756e4f860, type: 2}
+    Transitions:
+    - {fileID: 11400000, guid: e05414a60e8da4861b25026ca5d0a285, type: 2}
+--- !u!114 &5558748499984248622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6002824552549613370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b3773a88b57de14aa19d6e226a150fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LifeParameters
+  maxHealth: 100
+  maxHunger: 100
+  hungerIncreaseRate: 5
+  dyingFromHungerTreshold: 90
+  dyingFromHungerRate: 1
