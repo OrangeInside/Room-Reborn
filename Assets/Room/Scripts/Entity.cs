@@ -31,6 +31,7 @@ public class Entity : MonoBehaviour
     private void Start()
     {
         stateMachine = GetComponent<StateMachine>();
+        GetComponent<LifeParameters>().OnDeath += Death;
     }
 
     public void Init(int entityID, Vector2Int position)

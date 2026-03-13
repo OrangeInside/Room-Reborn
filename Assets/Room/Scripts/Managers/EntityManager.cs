@@ -62,7 +62,7 @@ public class EntityManager : MonoBehaviour
 
         foreach(Entity entity in sortedEntities)
         {
-            Debug.Log($"{entity.name} ticked");
+            //Debug.Log($"{entity.name} ticked");
             entity.StateMachine.UpdateStates();
         }
     }
@@ -73,7 +73,7 @@ public class EntityManager : MonoBehaviour
 
         foreach (Entity entity in sortedEntities)
         {
-            Debug.Log($"{entity.name} ticked");
+            //Debug.Log($"{entity.name} ticked");
             entity.StateMachine.UpdateStates();
 
             yield return new WaitForSeconds(0.5f);

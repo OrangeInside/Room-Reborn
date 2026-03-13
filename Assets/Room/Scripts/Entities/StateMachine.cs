@@ -11,6 +11,7 @@ public class StateMachine : MonoBehaviour
     private State currentState;
     private StateMachineContext context;
     private Dictionary<State, List<Transition>> transitions = new();
+    bool isRunning = false;
 
     private void Start()
     {
@@ -19,7 +20,7 @@ public class StateMachine : MonoBehaviour
             owner = GetComponent<Entity>(),
             lifeParameters = GetComponent<LifeParameters>()
         };
-
+        context.lifeParameters.OnDeath += Stop;
         initialState.Init(context);
         foreach (StateTransitions stateTransition in stateTransitions)
         {
@@ -40,6 +41,7 @@ public class StateMachine : MonoBehaviour
             transitions[stateTransition.State] = new List<Transition>(stateTransition.Transitions);
         }
 
+        isRunning = true;
         SetState(initialState);
     }
 
@@ -55,6 +57,10 @@ public class StateMachine : MonoBehaviour
 
     public void UpdateStates()
     {
+        if(!isRunning)
+        {
+            return;
+        }
         var transition = GetBestTransition();
         if (transition != null)
         {
@@ -74,5 +80,10 @@ public class StateMachine : MonoBehaviour
             .FirstOrDefault();
 
         return possibleTransitions;
+    }
+
+    private void Stop()
+    {
+        isRunning = false;
     }
 }

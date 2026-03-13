@@ -19,6 +19,7 @@ public class LifeParameters : MonoBehaviour, ITickable
 
     public int health;
     public int hunger;
+    public bool IsDead() => health <= 0;
 
     // public int Health => health;
     // public int Hunger => hunger;
@@ -33,7 +34,7 @@ public class LifeParameters : MonoBehaviour, ITickable
     {
         if(hunger >= dyingFromHungerTreshold)
         {
-            health = Math.Clamp(health - dyingFromHungerRate, 0, maxHealth);
+            LoseHealth(dyingFromHungerRate);
             Debug.Log($"Dying from hunger.");
         }
         hunger = Math.Clamp(hunger + hungerIncreaseRate, 0, maxHunger);
